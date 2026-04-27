@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azwad Raeed — ENC 2135 Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --ink: #18180f;
+      --mid: #6b6b5e;
+      --faint: #e8e7e0;
+      --accent: #2a5c3f;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Outfit', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      background: rgba(250,250,248,0.93);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--faint);
+    }
+    .nav-name { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.73rem; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.18s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 2.5rem 5rem; max-width: 1100px; margin: 0 auto;
+    }
+    .hero-kicker { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; opacity:0; animation: up 0.7s 0.1s forwards; }
+    .hero-title { font-family: var(--serif); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 300; line-height: 1.0; letter-spacing: -0.02em; opacity:0; animation: up 0.8s 0.25s forwards; }
+    .hero-title em { font-style: italic; color: var(--accent); }
+    .hero-divider { width: 100%; height: 1px; background: var(--faint); margin: 2.5rem 0; opacity:0; animation: up 0.6s 0.4s forwards; }
+    .hero-meta { display: flex; gap: 4rem; flex-wrap: wrap; opacity:0; animation: up 0.7s 0.5s forwards; }
+    .hero-meta-item label { display: block; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.3rem; }
+    .hero-meta-item span { font-family: var(--serif); font-size: 1rem; font-weight: 400; }
+
+    .section { padding: 7rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+    .dark-section { background: var(--ink); padding: 7rem 2.5rem; }
+    .dark-section > .inner { max-width: 1100px; margin: 0 auto; }
+    .tinted-section { background: #f0efe8; padding: 7rem 2.5rem; border-top: 1px solid var(--faint); }
+    .tinted-section > .inner { max-width: 1100px; margin: 0 auto; }
+
+    .label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 0.8rem; margin-bottom: 2.5rem; }
+    .label::after { content: ''; flex: 1; height: 1px; background: var(--faint); max-width: 120px; }
+    .label-dark { color: #5a9e72; }
+    .label-dark::after { background: #2a2a20; }
+    .section-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.15; margin-bottom: 2rem; }
+
+    /* ABOUT */
+    #about { border-top: 1px solid var(--faint); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.8fr; gap: 5rem; align-items: start; }
+    .about-sidebar { position: sticky; top: 7rem; }
+    .about-sidebar h2 { font-family: var(--serif); font-size: 2.8rem; font-weight: 300; line-height: 1.1; margin-bottom: 1.5rem; }
+    .about-sidebar h2 em { font-style: italic; color: var(--accent); }
+    .about-body p { font-size: 1rem; line-height: 1.85; color: #3a3a30; margin-bottom: 1.2rem; }
+
+    /* ARTIFACTS */
+    .artifact-list { display: flex; flex-direction: column; }
+    .artifact-item { display: grid; grid-template-columns: 60px 1fr auto; align-items: start; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid #2a2a20; }
+    .artifact-item:last-child { border-bottom: none; }
+    .artifact-num { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; color: #2a2a20; line-height: 1; padding-top: 0.2rem; }
+    .artifact-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: #fafaf8; margin-bottom: 0.5rem; line-height: 1.3; }
+    .artifact-desc { font-size: 0.88rem; color: #8a8a78; line-height: 1.7; max-width: 55ch; }
+    .artifact-type { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: #5a9e72; white-space: nowrap; padding-top: 0.4rem; }
+
+    /* ESSAY + REFLECTION */
+    #essay { border-top: 1px solid var(--faint); }
+    .two-col { display: grid; grid-template-columns: 220px 1fr; gap: 5rem; align-items: start; }
+    .sticky-col { position: sticky; top: 7rem; height: fit-content; }
+    .sidebar-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; line-height: 1.3; margin-bottom: 0.5rem; color: var(--ink); }
+    .sidebar-meta { font-size: 0.78rem; color: var(--mid); line-height: 1.6; margin-bottom: 1.5rem; }
+    .toc { list-style: none; }
+    .toc li { border-top: 1px solid var(--faint); }
+    .toc a { display: block; font-size: 0.78rem; color: var(--mid); text-decoration: none; padding: 0.55rem 0; transition: color 0.18s; }
+    .toc a:hover { color: var(--accent); }
+    .prose { max-width: 65ch; }
+    .prose h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; margin: 2.5rem 0 0.8rem; }
+    .prose h3:first-child { margin-top: 0; }
+    .prose p { font-size: 0.97rem; line-height: 1.9; color: #3a3a30; margin-bottom: 1rem; }
+    .works-cited { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--faint); }
+    .works-cited h3 { margin-top: 0; }
+    .works-cited p { font-size: 0.88rem; padding-left: 1.5rem; text-indent: -1.5rem; }
+
+    footer { background: var(--ink); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+    footer span { font-size: 0.7rem; color: #444; letter-spacing: 0.08em; }
+
+    @keyframes up { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+    @media (max-width: 720px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .hero { padding: 0 1.5rem 4rem; }
+      .section { padding: 5rem 1.5rem; }
+      .dark-section, .tinted-section { padding: 5rem 1.5rem; }
+      .about-grid, .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-sidebar, .sticky-col { position: static; }
+      .artifact-item { grid-template-columns: 40px 1fr; }
+      .artifact-type { display: none; }
+      footer { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-name">Azwad Raeed</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#artifacts">Artifacts</a></li>
+    <li><a href="#essay">Essay</a></li>
+    <li><a href="#reflection">Reflection</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <p class="hero-kicker">ENC 2135 · Writing Portfolio · Spring 2026</p>
+  <h1 class="hero-title">Azwad<br><em>Raeed</em></h1>
+  <div class="hero-divider"></div>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><label>Course</label><span>ENC 2135</span></div>
+    <div class="hero-meta-item"><label>Instructor</label><span>Prof. Olivia Brookes</span></div>
+  </div>
+</div>
+
+<section class="section" id="about">
+  <div class="label">01 — About</div>
+  <div class="about-grid">
+    <div class="about-sidebar">
+      <h2>Who<br>I <em>am</em></h2>
+    </div>
+    <div class="about-body">
+      <p>My name is Azwad, and I am currently a freshman studying Mechanical Engineering with a minor in Innovation. My academic interests include physics, problem-solving, design, and emerging technologies. I am interested in understanding how technical and creative skills can come together to solve practical problems, though I am still exploring how all of my interests connect and where they will take me in the future.</p>
+      <p>Outside of academics, I spend time on creative projects that allow me to experiment and build. I work with 3D modeling and design, and I often film with a GoPro to capture ideas or document projects. I also tutor students in math and science, which has helped me develop communication skills and the ability to explain concepts in ways that are clear and practical.</p>
+      <p>I enjoy projects that challenge both my technical and creative thinking. Whether visualizing a design in 3D, testing ideas, or experimenting with filming techniques, I am motivated by the process of learning through doing. I value clarity, adaptability, and curiosity in how I approach both academic work and creative pursuits.</p>
+      <p>This portfolio reflects my academic work, creative projects, and the process of exploring different paths. It represents how I think, what I enjoy doing, and the skills I am developing while continuing to figure out how my interests fit together. I hope it demonstrates my curiosity, adaptability, and willingness to experiment as I work toward both personal and professional growth.</p>
+    </div>
+  </div>
+</section>
+
+<div class="dark-section" id="artifacts">
+  <div class="inner">
+    <div class="label label-dark">02 — Artifacts</div>
+    <h2 class="section-title" style="color:#fafaf8; margin-bottom:3rem;">Project 1 Writing Artifacts</h2>
+    <div class="artifact-list">
+      <div class="artifact-item">
+        <div class="artifact-num">1</div>
+        <div>
+          <div class="artifact-title">Annotated Bibliography</div>
+          <div class="artifact-desc">My first step in building a research argument about compliant mechanisms and 3D printing. Evaluating six scholarly sources and identifying how each contributed to my central argument about material selection — learning to move beyond summarizing sources and toward synthesizing them.</div>
+        </div>
+        <div class="artifact-type">Research</div>
+      </div>
+      <div class="artifact-item">
+        <div class="artifact-num">2</div>
+        <div>
+          <div class="artifact-title">Investigative Essay Draft</div>
+          <div class="artifact-desc">The bridge between my bibliography and my final paper. This draft shows how I began organizing sources into a structured argument. Comparing it to the final paper documents my growth in source integration, thesis development, and balancing technical writing with accessible explanation.</div>
+        </div>
+        <div class="artifact-type">Draft</div>
+      </div>
+      <div class="artifact-item">
+        <div class="artifact-num">3</div>
+        <div>
+          <div class="artifact-title">Final Investigative Essay</div>
+          <div class="artifact-desc">The completed paper synthesizing mechanism theory, manufacturing constraints, and fatigue analysis into a unified argument for a non-specialist audience.</div>
+        </div>
+        <div class="artifact-type">Final Paper</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="essay">
+  <div class="label">03 — Final Essay</div>
+  <div class="two-col">
+    <div class="sticky-col">
+      <p class="sidebar-title">Understanding Compliant Mechanisms in 3D Printing</p>
+      <p class="sidebar-meta">Azwad Raeed<br>ENC 2135 · Prof. Brookes<br>15 February 2026</p>
+      <ul class="toc">
+        <li><a href="#e1">Introduction</a></li>
+        <li><a href="#e2">Flexibility ≠ Weakness</a></li>
+        <li><a href="#e3">3D Printing &amp; Access</a></li>
+        <li><a href="#e4">Disagreements in Design</a></li>
+        <li><a href="#e5">Material Selection</a></li>
+        <li><a href="#e6">Experimentation</a></li>
+        <li><a href="#e7">Geometry</a></li>
+        <li><a href="#e8">Fatigue Resistance</a></li>
+        <li><a href="#e9">Medical &amp; Robotics</a></li>
+        <li><a href="#e10">Cost &amp; Environment</a></li>
+        <li><a href="#e11">The Future</a></li>
+        <li><a href="#e12">Conclusion</a></li>
+        <li><a href="#works-cited">Works Cited</a></li>
+      </ul>
+    </div>
+    <div class="prose">
+      <h3 id="e1">Introduction</h3>
+      <p>Engineering is often seen as a field defined by precision, rigidity, and strength. When most people imagine machines, they picture assemblies made of many rigid parts connected by hinges, bolts, and bearings. However, compliant mechanisms challenge this traditional view by replacing multiple rigid components with flexible structures that achieve motion through deformation. These mechanisms are increasingly important in modern engineering, especially with the rise of additive manufacturing, commonly known as 3D printing. Despite their growing relevance, compliant mechanisms remain widely misunderstood, not only by the public but even among engineers, designers, and hobbyists. Through examining scholarly research, practical experimentation, and engineering priorities, it becomes clear that compliant mechanisms are not simply weaker substitutes for rigid systems but are instead highly optimized solutions designed for specific performance goals. Understanding why researchers focus on geometry, material properties, and manufacturing methods reveals the complexity of compliant mechanism design and highlights how different groups interpret their value differently.</p>
+      <h3 id="e2">Flexibility Is Not Weakness</h3>
+      <p>One of the most common misunderstandings about compliant mechanisms is the assumption that flexibility automatically means weakness. In traditional mechanical design, rigidity is associated with durability and reliability. Flexible parts are often seen as temporary, fragile, or prone to failure. However, research shows that compliant mechanisms can actually increase reliability by eliminating joints that would otherwise wear out over time. According to Howell, compliant mechanisms reduce friction and eliminate the need for lubrication because they do not rely on sliding or rolling contact between separate components. This significantly reduces maintenance requirements and increases lifespan. Instead of concentrating stress at pins or hinges, compliant mechanisms distribute stress across their geometry, allowing them to function repeatedly without the same types of mechanical failure seen in traditional designs. Flexibility is not inherently a weakness but rather a different engineering approach with its own set of advantages.</p>
+      <h3 id="e3">3D Printing and Accessibility</h3>
+      <p>The rise of 3D printing has made compliant mechanisms more accessible than ever before. Traditional manufacturing methods, such as machining or injection molding, often limit the complexity of shapes that can be produced. Compliant mechanisms frequently rely on complex geometries that would be difficult or expensive to manufacture using conventional methods. Additive manufacturing removes many of these limitations by building parts layer by layer, allowing engineers to create shapes that were previously impractical. According to Gibson, Rosen, and Stucker, additive manufacturing enables engineers to integrate multiple functions into a single component, reducing assembly requirements and improving efficiency. This is especially important for compliant mechanisms because their performance depends heavily on geometry. By allowing more precise control over shape, 3D printing enables engineers to optimize flexibility, strength, and motion at the same time.</p>
+      <h3 id="e4">Disagreements in Design</h3>
+      <p>Despite these advantages, there is still disagreement among engineers, researchers, and hobbyists about the best way to design compliant mechanisms. Researchers often focus on mathematical modeling and stress analysis to predict how a mechanism will behave under different conditions. Their priority is accuracy and reliability, particularly for applications in fields such as aerospace, robotics, and medical devices. In contrast, hobbyists and independent designers often prioritize accessibility and ease of manufacturing. They may design compliant mechanisms based on intuition or experimentation rather than detailed simulation. This difference in priorities can lead to misunderstandings about why certain design decisions are made. What may appear overly complex to a hobbyist may actually be necessary to ensure reliability in critical applications.</p>
+      <h3 id="e5">Material Selection</h3>
+      <p>Material selection is another area where misunderstandings frequently occur. Many people assume that stronger materials will always produce better mechanisms. However, compliant mechanisms require materials with specific elastic properties. If a material is too stiff, it will not flex enough to function properly. If it is too soft, it may deform permanently or fail. According to Ashby, material selection must consider not only strength but also elasticity, fatigue resistance, and manufacturability. This explains why some compliant mechanisms are made from plastics rather than metals. While plastics may appear weaker, they often provide the flexibility needed for proper function. This challenges the assumption that stronger materials always produce better results.</p>
+      <h3 id="e6">Practical Experimentation</h3>
+      <p>To better understand these concepts, practical experimentation provides valuable insight. When designing compliant mechanisms using 3D printing, material choice significantly affects performance. Polylactic acid, or PLA, is a commonly used 3D printing material because it is easy to print and produces accurate shapes. However, PLA is relatively stiff and brittle compared to other materials. When used in compliant mechanisms, PLA may crack or fail after repeated use. In contrast, polyethylene terephthalate glycol, or PETG, provides greater flexibility and durability. It can bend repeatedly without breaking, making it more suitable for compliant designs. Thermoplastic polyurethane, or TPU, is an even more flexible material that allows for extreme deformation but may lack the stiffness needed for precise motion. These differences show that material selection is not simply about strength but about achieving the right balance between flexibility and stability.</p>
+      <h3 id="e7">Geometry</h3>
+      <p>Geometry plays an equally important role in compliant mechanism performance. Small changes in thickness, curvature, or length can significantly affect how a mechanism behaves. According to Lobontiu, compliant mechanism design often involves optimizing geometry to control stress distribution. Thinner sections allow more flexibility, while thicker sections provide support. This means that compliant mechanisms are carefully engineered to achieve specific motion characteristics. They are not random flexible shapes but precisely designed structures. This level of precision is often overlooked by those unfamiliar with the field, leading to the misconception that compliant mechanisms are simple or crude solutions.</p>
+      <h3 id="e8">Fatigue Resistance</h3>
+      <p>Another important factor is fatigue resistance. Because compliant mechanisms rely on repeated deformation, they must be able to withstand many cycles without failure. This requires careful design and material selection. According to research on fatigue in polymers, repeated stress can cause microscopic cracks that eventually lead to failure. Engineers must account for this by ensuring that stress levels remain within safe limits. This often involves using simulation software to predict how a mechanism will behave over time.</p>
+      <h3 id="e9">Medical Devices and Robotics</h3>
+      <p>The use of compliant mechanisms in medical devices demonstrates their importance in high-stakes fields. Compliant designs are used in surgical tools, prosthetics, and micro-scale devices. These applications require precise motion and high reliability. Traditional joints may introduce friction or require lubrication, which is not always acceptable in medical environments. In robotics, many modern systems use compliant components to improve safety and performance. Flexible elements allow robots to interact safely with humans by absorbing impacts, reducing the risk of injury and improving overall reliability.</p>
+      <h3 id="e10">Cost and Environmental Impact</h3>
+      <p>Cost is another important consideration. Traditional mechanisms often require multiple parts, assembly time, and maintenance. Compliant mechanisms can reduce these costs by combining multiple functions into a single component. According to engineering cost analysis studies, reducing part count can significantly improve efficiency. By reducing part count and eliminating the need for lubrication, compliant mechanisms also reduce waste and environmental harm, aligning with modern engineering goals of sustainability and efficiency.</p>
+      <h3 id="e11">The Future</h3>
+      <p>The future of compliant mechanisms is closely tied to advances in additive manufacturing. As 3D printing technology improves, engineers will be able to create even more complex and optimized designs. The integration of compliant mechanisms with smart materials presents another area of future development — materials that respond to temperature, electricity, or other stimuli can create mechanisms that move without traditional actuators, leading to new types of devices with fewer components and greater efficiency.</p>
+      <h3 id="e12">Conclusion</h3>
+      <p>Compliant mechanisms represent an important development in modern engineering. They are not weaker alternatives but highly specialized solutions designed to meet specific needs. Their performance depends on careful consideration of geometry, material properties, and manufacturing methods. This shift reflects a deeper philosophy — one that works with material flexibility rather than against it, allowing motion to emerge from the structure itself. Understanding compliant mechanisms now is essential for understanding the future of engineering.</p>
+      <div class="works-cited" id="works-cited">
+        <h3>Works Cited</h3>
+        <p>Gibson, I., D. W. Rosen, and B. Stucker. <em>Additive Manufacturing Technologies.</em> Springer, 2021.</p>
+        <p>Howell, L. L. <em>Compliant Mechanisms.</em> Wiley, 2001.</p>
+        <p>Howell, L. L., S. P. Magleby, and B. M. Olsen. <em>Handbook of Compliant Mechanisms.</em> Wiley, 2013.</p>
+        <p>Raeed, A., and R. Jumu. "Material Trade-Offs in 3D Printed Compliant Mechanisms." 2024.</p>
+        <p>Zhang, Y., J. Ma, and L. L. Howell. "Fatigue Analysis of 3D Printed Compliant Mechanisms." <em>Journal of Mechanical Design,</em> 2018.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tinted-section" id="reflection">
+  <div class="inner">
+    <div class="label">04 — Reflective Statement</div>
+    <div class="two-col">
+      <div class="sticky-col">
+        <ul class="toc">
+          <li><a href="#r1">Writing & Correctness</a></li>
+          <li><a href="#r2">Rhetorical Purpose</a></li>
+          <li><a href="#r3">Composing Process</a></li>
+          <li><a href="#r4">Genre</a></li>
+          <li><a href="#r5">Argument Structure</a></li>
+          <li><a href="#r6">Revision</a></li>
+          <li><a href="#r7">Looking Forward</a></li>
+        </ul>
+      </div>
+      <div class="prose">
+        <p id="r1">Looking back at Projects 1 and 2, I can see a clear shift in how I understand writing. Before this course, I treated writing as a mechanical task. The goal was to put accurate information on the page in a logical order and submit it. I did not think much about who was reading, what they already knew, or how the structure of a document shapes the way ideas land. ENC 2135 changed that. Each project pushed me to make decisions I had never had to make before, and those decisions accumulated into a genuinely different way of approaching written work.</p>
+        <p id="r2">In Project 1, my annotated bibliography focused on building knowledge and credibility. I learned how to evaluate sources, connect different studies, and position my own research within an existing academic conversation. This process helped me better understand discourse communities, especially how experts communicate through evidence, citation, and shared terminology. Before writing the bibliography, I thought of sources as containers of information you pull from when you need a fact or a quote. After working through the annotation process, I understood them differently. Each source is making an argument, speaking to other sources, and contributing to a larger conversation that was already happening before I arrived. My job was not just to summarize what each one said but to figure out how they related to each other and where my own paper fit within that network. That realization slowed me down in the best way. I had to think more carefully about structure and clarity, because I was no longer writing for a vague, general reader. I was writing for someone who needed to follow a specific line of reasoning from one source to the next.</p>
+        <p id="r3">Project 2 pushed me to take this further by adapting my ideas across multiple genres and audiences. Instead of writing one traditional essay, I created a TikTok script, an infographic, and an op-ed, each targeting a different group. This helped me understand that genre is flexible and shaped by purpose. Each format had its own expectations, so I had to adjust tone, structure, and content to match the audience. The TikTok script required short sentences, a hook in the first few seconds, and language that felt conversational rather than formal. The infographic forced me to strip ideas down to their most essential form, because there was no room for elaboration. The op-ed asked me to take a clear position and defend it with enough urgency that a general reader would care. Moving between these formats made visible something that had always been invisible to me: every choice in a piece of writing, including word choice, sentence length, paragraph structure, and level of detail, is a response to the audience and the context. I also became more intentional with rhetorical appeals like pathos, logos, and ethos depending on what would be most effective for each situation. Writing the same core argument in three completely different ways forced me to understand what the argument actually was at its core, separate from any particular format.</p>
+        <p id="r4">Overall, this course has changed how I approach writing. I now think carefully about who I am writing for, what I want them to take away, and how the format shapes the message. I have also learned that strong writing is not just about good ideas, but about presenting those ideas in a way that fits the audience and context. This has made my writing more focused, purposeful, and adaptable. These are not abstract lessons. They are habits I can feel changing how I draft, how I revise, and how I read other people's writing.</p>
+        <p id="r5">The revision process for Project 3 deepened my understanding of what it means to genuinely improve a piece of writing rather than simply correct surface-level errors. Before this course, I thought revision meant fixing grammar and spelling. Now I understand it as a process of rethinking structure, sharpening argument, and recalibrating tone for the intended audience. When I reread my research paper on compliant mechanisms, I noticed that some of my body paragraphs were making claims without fully connecting them back to my thesis. Revision pushed me to ask: does this paragraph earn its place? That question changed how I read my own work. I started cutting sentences that were technically accurate but did not move the argument forward. I reorganized sections that were logically correct but in the wrong order for a reader who was encountering the ideas for the first time. The paper that came out of revision was not a polished version of the original draft. It was a structurally different document built on a clearer understanding of what I was actually trying to say.</p>
+        <p id="r6">Peer review also shifted my perspective in ways I did not anticipate. Receiving feedback forced me to separate myself from the writing and consider how a reader with no prior knowledge of my topic might experience the paper. My peer pointed out that certain transitions felt abrupt and that I assumed more background knowledge than my audience might have. This was humbling but useful. I had been writing for a reader who already understood compliant mechanisms, which meant I was skipping over explanations that a general reader genuinely needed. That feedback sent me back into the paper with a different set of questions. Giving feedback was equally valuable. Reading a classmate's draft with a critical eye helped me recognize similar issues in my own work. When I noticed that their introduction took too long to arrive at the central argument, I went back to mine and found the same problem. Peer review created a feedback loop that made both the giving and the receiving more useful than either would have been on its own.</p>
+        <p id="r7">One of the most practical things I am taking away from ENC 2135 is the habit of multiple drafts. I used to treat a first draft as nearly final, something to polish rather than rebuild. Now I see early drafts as thinking tools, places to get ideas out before deciding what actually belongs. The first draft is not the essay. It is the raw material the essay gets made from. Reading my paper aloud during my third pass helped me catch awkward phrasing I had missed completely in silence. It turns out the ear catches things the eye skips. Sentences that looked fine on the page felt wrong when spoken, which told me something important about rhythm and clarity that no amount of silent rereading had revealed. That single technique will stay with me long after this course ends, and so will the broader understanding it represents: that writing is not a thing you produce once and finish, but a process you return to until the work says what it actually needs to say.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>Azwad Raeed</span>
+  <span>ENC 2135 · Spring 2026</span>
+</footer>
+
+</body>
+</html>
